@@ -1,7 +1,10 @@
 {% extends 'blog/base.html' %}
 
+{% block head_title %}
+    {{post.title}} - Blog
+{% endblock %}
+
 {% block main_area %}
-                <div class="col-lg-8" id="main-area">
                     <!-- Post content-->
                     <div id="post-area">
                         <!-- Post header-->
@@ -17,7 +20,6 @@
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
                         </header>
-                        #삭제필요?
 
                         <!-- Preview image figure-->
                         <figure class="mb-4">
@@ -87,6 +89,5 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
 {% endblock %}

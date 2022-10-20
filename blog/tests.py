@@ -8,6 +8,10 @@ class TestView(TestCase):   #class 만듦. class 이름은 시작 대문자
     def setUp(self):
         self.client = Client()
 
+    def nav_test(self, soup):
+        navbar = soup.nav
+        self.assertIn('Blog', navbar.text)
+        self.assertIn('AboutMe', navbar.text)
 
     def test_post_list(self):
         response = self.client.get('/blog/')
@@ -19,9 +23,10 @@ class TestView(TestCase):   #class 만듦. class 이름은 시작 대문자
         self.assertEqual(soup.title.text, 'Blog')
 
         # navbar가 정상적으로 보이는지
-        navbar = soup.nav
-        self.assertIn('Blog', navbar.text)
-        self.assertIn('AboutMe', navbar.text)
+        #navbar = soup.nav
+        #self.assertIn('Blog', navbar.text)
+        #self.assertIn('AboutMe', navbar.text)
+        self.nav_test(soup)
 
         # Post가 정상적으로 보이는지 테스트한다.
         # 1. 맨 처음엔 Post가 하나도 안보임
@@ -51,9 +56,10 @@ class TestView(TestCase):   #class 만듦. class 이름은 시작 대문자
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        navbar = soup.nav
-        self.assertIn('Blog', navbar.text)
-        self.assertIn('AboutMe', navbar.text)
+        #navbar = soup.nav
+        #self.assertIn('Blog', navbar.text)
+        #self.assertIn('AboutMe', navbar.text)
+        self.nav_test(soup)
 
         self.assertIn(post_001.title, soup.title.text)
 
