@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 import os
 
 # Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self): #IP주소/blog/tag/slug/
+        return f'/blog/tag/{self.slug}/'
 
 # Category는 admin해줘야함. admin에서 category볼 수 있도록 + views설정도, 설정주의 sidebar? post_set.all() <-ex
 class Category(models.Model):
@@ -38,7 +47,8 @@ class Post(models.Model):
 
     #카테고리 다대일 설정. admin.py도 설정해줘야함.
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-    
+    tags = models.ManyToManyField(Tag, blank=True)
+
     def __str__(self):
         return f'[{self.pk}]{self.title}:: {self.author} : {self.created_at}'
 
