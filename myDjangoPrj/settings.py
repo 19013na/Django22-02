@@ -114,7 +114,8 @@ USE_TZ = False
 
 STATIC_URL = "static/"
 
-
+#1이거 -> 2. models - head.image -> 3. pip install Pillow + migrate -> 4. prj/urls가서 urlpatterns+=
+# -> 5. head_image의 src에 "{{p.head_image.url}}" -> make file_upload way too..
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')   # 경로명 설정 - os... 위에 import 해줌
 
@@ -122,3 +123,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '_media')   # 경로명 설정 - os... 위�
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#가상환경 활성화 - venv -> djnago설치 -> djnago 프로젝트 생성 -> 데이터베이스 생성 : migrate -> 서버 구동 ->
+# 관리자 계정 생성 : python manage.py createsuperuser ...
+#pillow 설치 : pip install pillow
+# beautifulsoup4 설치 : pip install beautifulsoup4
+# 앱 개발 : startapp -> model.py model만들기 -> setting 앱 등록 -> migrate -> admin등록
+# 웹 페이지 : prj.urls -> blog.urls -> blog.views -> templates/blog/.html생성
+#미디어 파일 : setting -> models.py -> pip install Pillow -> urls.py -> html의 src={{p.함수이름.url}}
+# category 설정 : models.py에서 설정, 함수도 -> admin.py -> views.py -> post_set은 category에 속하는 post정보를 받아오기 위해 사용

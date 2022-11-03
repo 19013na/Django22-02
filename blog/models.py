@@ -3,6 +3,24 @@ from django.contrib.auth.models import User
 import os
 
 # Create your models here.
+
+# Category는 admin해줘야함. admin에서 category볼 수 있도록 + views설정도, 설정주의 sidebar? post_set.all() <-ex
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+    def __str__(self):
+        return self.name
+
+    # slug에 맞게 카테고리 배열됨
+    def get_absolute_url(self):
+        return f'/blog/category/{self.slug}'
+
+    # admin에 뜨는 이름 지어줄 때
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+
+
 class Post(models.Model):
     title = models.CharField(max_length=30)
     hook_text = models.TextField(max_length=100, blank=True)  #CharField와 다르게 TextField는 길이 제한 없음.
@@ -15,15 +33,20 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # 추후 author 작성
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    # 추후 author 작성  - 다대일 관계를 표현하는 foreignkey
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)  # models.CASCADE는 사용자가 지워지면 작성한 글도 지워짐
 
+    #카테고리 다대일 설정. admin.py도 설정해줘야함.
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+    
     def __str__(self):
         return f'[{self.pk}]{self.title}:: {self.author} : {self.created_at}'
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'
 
+
+    #다운로드 될 파일 이름 설정
     def get_file_name(self):
         return os.path.basename(self.file_upload.name)
 

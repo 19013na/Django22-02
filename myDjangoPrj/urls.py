@@ -25,4 +25,5 @@ urlpatterns = [ #IP주소/
     path('', include('single_pages.urls'))  # IP주소/
 ]
 
+#사진 추가
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
