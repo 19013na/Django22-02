@@ -32,7 +32,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
-    hook_text = models.TextField(max_length=100, blank=True)  #CharField와 다르게 TextField는 길이 제한 없음.
+    hook_text = models.CharField(max_length=100, blank=True)  #CharField와 다르게 TextField는 길이 제한 없음.
     content = models.TextField()
 
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)    # _media가 생략된 것...?
