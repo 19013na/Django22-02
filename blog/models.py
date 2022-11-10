@@ -47,7 +47,7 @@ class Post(models.Model):
 
     #카테고리 다대일 설정. admin.py도 설정해줘야함.
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag, null=True, blank=True)
 
     def __str__(self):
         return f'[{self.pk}]{self.title}:: {self.author} : {self.created_at}'
