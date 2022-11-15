@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
     "blog",
     "single_pages"
 ]
@@ -118,6 +119,8 @@ STATIC_URL = "static/"
 # -> 5. head_image의 src에 "{{p.head_image.url}}" -> make file_upload way too..
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')   # 경로명 설정 - os... 위에 import 해줌
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
