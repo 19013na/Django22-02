@@ -22,7 +22,8 @@ urlpatterns = [ #IP주소/
     path("admin/", admin.site.urls), # IP주소/admin
     path('blog/', include('blog.urls')),    # IP주소/blog
     # blog밑에 있는 urls를 부르겠다. but, blog안에 urls가 없음. 만들자
-    path('', include('single_pages.urls'))  # IP주소/
+    path('', include('single_pages.urls')),  # IP주소/
+    path('accounts/', include('allauth.urls'))
 ]
 
 #사진 추가
