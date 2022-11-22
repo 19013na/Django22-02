@@ -68,3 +68,18 @@ class Post(models.Model):
         # c.xlsx -> c xlsx  로 나뉘게 된다.
         # a.b.c.txt -> a b c txt 로 나뉠 수 있는 예외가 생김
         # 이것때문에 []이 인덱스 번호는 1이 아닌 -1로 표현한다.
+
+
+# post와 comment는 다대일 관계, 하나의 댓글을 다는 계정은 하나이고 하나의 계정은 여러 댓글 달 수 있어서 다대일 관계,
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.author} : {self.content}'
+
+    def get_absolute_url(self):
+        return f'{self.post.get_absolute_url()}#comment-{self.pk}'
