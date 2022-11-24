@@ -89,6 +89,7 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class PostList(ListView):
     model = Post
     ordering = '-pk'
+    paginate_by = 5 # 한페이지에 포스트 5개까지 보여주겠다.
 
 
     #category때문에 넣어준 함수 : 추가하고싶은 요소
