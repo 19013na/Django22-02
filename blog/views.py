@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 # Create your views here.
 # 포스트 수정하는 페이지
@@ -86,6 +87,8 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count  # category가 없는 것들
         return context
 
+
+
 class PostList(ListView):
     model = Post
     ordering = '-pk'
@@ -102,6 +105,23 @@ class PostList(ListView):
     # 템플릿 모델명_list.html : post_list.html
     # post_list.html파일은 현재 blog디렉토리에 있는 index.html과 같다. 이름만 다르게 한 것.
     # 파라미터 모델명_list : post_list
+
+class PostSearch(PostList):  # PostList는 ListView를 상속받음. PostList를 상속받아 ListView를 상속받는 것임. post_list, post_list.html
+    paginate_by = None
+
+    def get_queryset(self):
+        q = self.kwargs['q']
+        post_list = Post.objects.filter(
+            Q(title__contains=q) | Q(tags__name__contains=q)
+        ).distinct()
+        return post_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search : {q} ({self.get_queryset().count()})'
+        return context
+
 class PostDetail(DetailView):
     model = Post
 
