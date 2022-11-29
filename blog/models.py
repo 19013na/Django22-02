@@ -69,6 +69,11 @@ class Post(models.Model):
         # a.b.c.txt -> a b c txt 로 나뉠 수 있는 예외가 생김
         # 이것때문에 []이 인덱스 번호는 1이 아닌 -1로 표현한다.
 
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists():
+            return self.author.socialaccount_set.first().get_avatar_url()
+        else:
+            return 'https://dummyimage.com/50x50/ced4da/6c757d.jpg'
 
 # post와 comment는 다대일 관계, 하나의 댓글을 다는 계정은 하나이고 하나의 계정은 여러 댓글 달 수 있어서 다대일 관계,
 class Comment(models.Model):
@@ -83,9 +88,3 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
-
-    def get_avatar_url(self):
-        if self.author.socialaccount_set.exists():
-            return self.author.socialaccount_set.first().get_avatar_url()
-        else:
-            return 'https://dummyimage.com/50x50/ced4da/6c757d.jpg'
